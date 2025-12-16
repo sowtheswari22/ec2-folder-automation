@@ -1,4 +1,4 @@
 #!/bin/bash
-echo "Hellooooo from $(hostname)" > /opt/hello_world.txt
+echo "Hello from $(hostname)" > /opt/hello_world.txt
 date >> /opt/hello_world.txt
 
