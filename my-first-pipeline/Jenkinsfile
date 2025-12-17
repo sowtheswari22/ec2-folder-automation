@@ -13,7 +13,7 @@ pipeline {
             steps {
                 echo 'Copying hello.sh to /opt and making it executable'
                 sh '''
-                    sudo cp ${WORKSPACE}/hello.sh /opt/hello.txt
+                    sudo cp ${WORKSPACE}/my-first-pipeline/hello.sh /opt/hello.txt
                     sudo chmod +x /opt/hello.txt
                 '''
             }
