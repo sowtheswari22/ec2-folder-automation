@@ -2,21 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Clone Repo') {
             steps {
-                echo 'Building application...'
+                echo 'Code pulled from GitHub'
             }
         }
 
-        stage('Test') {
+        stage('Deploy to EC2') {
             steps {
-                echo 'Running tests...'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
+                sshagent(['ec2-key']) {
+                    sh """
+                    scp -o StrictHostKeyChecking=no hello_world.txt ubuntu@:/15.207.21.102:opt/hello_world.txt
+                    """
+                }
             }
         }
     }
