@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 echo 'Pulling latest code from GitHub...'
-                git branch: 'main', url: https://github.com/sowtheswari22/ec2-folder-automation
+                git branch: 'main', url: 'https://github.com/sowtheswari22/ec2-folder-automation', credentialsId: 'github-token'
             }
         }
 
@@ -13,8 +13,8 @@ pipeline {
             steps {
                 echo 'Copying hello.sh to /opt and making it executable'
                 sh '''
-                    cp ${WORKSPACE}/hello.sh /opt/hello.txt
-                    chmod +x /opt/hello.txt
+                    sudo cp ${WORKSPACE}/hello.sh /opt/hello.txt
+                    sudo chmod +x /opt/hello.txt
                 '''
             }
         }
@@ -31,6 +31,12 @@ pipeline {
         success {
             echo 'Deployment and execution completed successfully!'
         }
+        failure {
+            echo 'Deployment or execution failed.'
+        }
+    }
+}
+
         failure {
             echo 'Deployment or execution failed.'
         }
