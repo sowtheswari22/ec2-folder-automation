@@ -37,8 +37,4 @@ pipeline {
     }
 }
 
-        failure {
-            echo 'Deployment or execution failed.'
-        }
-    }
-}
+     
