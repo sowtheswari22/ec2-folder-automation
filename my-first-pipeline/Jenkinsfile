@@ -13,8 +13,8 @@ pipeline {
                 sshagent(['ec2-key']) {
                     // Copy the hello.sh file to EC2
                     sh """
-                        scp -o StrictHostKeyChecking=no my-first-pipeline/hello.sh ubuntu@15.207.21.102:/opt/hello.sh
-                        ssh -o StrictHostKeyChecking=no ubuntu@15.207.21.102 "chmod +x /opt/hello.sh && /opt/hello.sh"
+                        scp -o StrictHostKeyChecking=no my-first-pipeline/hello.sh ubuntu@15.207.21.102:/opt/hello.txt
+                        ssh -o StrictHostKeyChecking=no ubuntu@15.207.21.102 "chmod +x /opt/hello.txt && /opt/hello.txt"
                     """
                 }
             }
