@@ -4,20 +4,35 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                echo 'Code pulled from GitHub'
+                echo 'Pulling latest code from GitHub...'
+                git branch: 'main', url: 'https://github.com/sowtheswari22/my-first-pipeline.git'
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy to /opt') {
             steps {
-                sshagent(['ec2-key']) {
-                    // Copy the hello.sh file to EC2
-                    sh """
-                        scp -o StrictHostKeyChecking=no my-first-pipeline/hello.sh ubuntu@15.207.21.102:/opt/hello.txt
-                        ssh -o StrictHostKeyChecking=no ubuntu@15.207.21.102 "chmod +x /opt/hello.txt && /opt/hello.txt"
-                    """
-                }
+                echo 'Copying hello.sh to /opt and making it executable'
+                sh '''
+                    cp ${WORKSPACE}/hello.sh /opt/hello.txt
+                    chmod +x /opt/hello.txt
+                '''
             }
+        }
+
+        stage('Run Script') {
+            steps {
+                echo 'Executing the script'
+                sh '/opt/hello.txt'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment and execution completed successfully!'
+        }
+        failure {
+            echo 'Deployment or execution failed.'
         }
     }
 }
