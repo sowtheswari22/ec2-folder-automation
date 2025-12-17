@@ -9,12 +9,12 @@ pipeline {
         }
 
         stage('Deploy to EC2') {
-            steps {
-                sshagent(['ec2-key']) {
-                    sh """
-                    scp -o StrictHostKeyChecking=no hello.sh ubuntu@:/15.207.21.102:opt/hello_world.txt
-                    """
-                }
+    steps {
+        sshagent(['ec2-key']) {
+            sh """
+            scp -o StrictHostKeyChecking=no my-first-pipeline/hello.sh ubuntu@15.207.21.102:/opt/hello.sh
+            ssh -o StrictHostKeyChecking=no ubuntu@15.207.21.102 "chmod +x /opt/hello.sh && /opt/hello.sh"
+            ""
             }
         }
     }
