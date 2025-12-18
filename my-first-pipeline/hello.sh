@@ -1,2 +1,3 @@
 #!/bin/bash
-echo "Hell00 from hello.sh!"
+echo "
+'hai from hello.sh!"
