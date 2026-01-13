@@ -1,12 +1,10 @@
 GitHub → Jenkins → EC2 (File Sync Project)
-🧠 What This Project Does
 •	You update a file in GitHub
 •	Jenkins pulls the latest code
 •	Jenkins copies the file to EC2
 •	EC2 file content gets updated
-✅ Single source of truth = GitHub
 ________________________________________
-📁 STEP 1: GitHub Repository Setup
+ STEP 1: GitHub Repository Setup
 Create / update your GitHub repo like this:
 ec2-folder-automation/
  ├── Jenkinsfile
@@ -15,7 +13,7 @@ hello_world.txt (GitHub)
 Hello from GitHub – Version 1
 Commit & push.
 ________________________________________
-📜 STEP 2: Jenkinsfile (IMPORTANT)
+STEP 2: Jenkinsfile (IMPORTANT)
 This pipeline:
 •	pulls GitHub code
 •	copies file to EC2
@@ -42,12 +40,12 @@ pipeline {
         }
     }
 }
-🔁 Replace:
+Replace:
 •	<EC2_PUBLIC_IP> with your EC2 public IP
 •	ec2-key → Jenkins credential ID
 Commit this Jenkinsfile.
 ________________________________________
-⚙️ STEP 3: Jenkins Job Configuration
+ STEP 3: Jenkins Job Configuration
 1.	Jenkins → New Item
 2.	Name: github-to-ec2
 3.	Type: Pipeline
@@ -59,22 +57,22 @@ ________________________________________
 9.	Script Path: Jenkinsfile
 10.	Save
 ________________________________________
-▶️ STEP 4: Build & Verify
+STEP 4: Build & Verify
 Build Jenkins job
 Click Build Now
 Login to EC2
 cat /opt/hello_world.txt
 Output:
 Hello from GitHub – Version 1
-🎉 Success!
+ Success!
 ________________________________________
-🔁 STEP 5: Change File in GitHub (TEST)
+ STEP 5: Change File in GitHub (TEST)
 Edit hello_world.txt in GitHub:
 Hello from GitHub – Version 2
 Commit & push.
-👉 Click Build Now again.
+ Click Build Now again.
 Check EC2:
 cat /opt/hello_world.txt
 Output:
 Hello from GitHub – Version 2
-✅ GitHub changes reflected in server
+GitHub changes reflected in server
