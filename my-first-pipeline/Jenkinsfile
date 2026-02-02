@@ -22,7 +22,7 @@ pipeline {
         stage('Run Script') {
             steps {
                 echo 'Executing the script'
-                sh '/opt/hello.txt'
+                sh '/opt/jenkins/hello.sh
             }
         }
     }
