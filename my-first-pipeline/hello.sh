@@ -1,3 +1,3 @@
 #!/bin/bash
-echo "
-"hello from GCP"
+echo 
+"Welcome from GCP"
