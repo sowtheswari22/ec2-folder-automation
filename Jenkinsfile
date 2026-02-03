@@ -7,7 +7,7 @@ pipeline {
             steps {
                 sshagent(['flask-ssh']) {
                     sh '''
-                    ssh mohancbe5202@APPLICATION_SERVER_IP << EOF
+                    ssh mohancbe5202@34.69.84.254 << EOF
                       cd /opt/flask-app
                       source venv/bin/activate
                       pip install -r requirements.txt
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sshagent(['flask-ssh']) {
                     sh '''
-                    ssh mohancbe5202@APPLICATION_SERVER_IP << EOF
+                    ssh mohancbe5202@34.69.84.254 << EOF
                       cd /opt/flask-app
                       source venv/bin/activate
                       pkill gunicorn || true
