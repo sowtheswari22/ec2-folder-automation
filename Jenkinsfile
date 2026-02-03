@@ -1,36 +1,24 @@
-pipeline {
-    agent any
+stage('Deploy Flask App') {
+    steps {
+        sshagent(['flask-ssh']) {
+            sh """
+            ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
+                set -e
+                cd /opt/flask-app
+                source venv/bin/activate
 
-    stages {
+                # Stop existing gunicorn processes
+                if pgrep -f gunicorn > /dev/null; then
+                    echo "Stopping existing gunicorn..."
+                    pkill -f gunicorn
+                fi
 
-        stage('Install Dependencies') {
-            steps {
-                sshagent(['flask-ssh']) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
-                        cd /opt/flask-app &&
-                        git pull origin main &&
-                        source venv/bin/activate &&
-                        pip install -r requirements.txt
-                    '
-                    """
-                }
-            }
-        }
-
-        stage('Deploy Flask App') {
-            steps {
-                sshagent(['flask-ssh']) {
-                    sh """
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
-                        cd /opt/flask-app &&
-                        source venv/bin/activate &&
-                        pkill -f gunicorn || true &&
-                        gunicorn app:app -b 0.0.0.0:5000 --daemon
-                    '
-                    """
-                }
-            }
+                echo "Starting gunicorn..."
+                gunicorn app:app -b 0.0.0.0:5000 --daemon \
+                    --access-logfile logs/access.log \
+                    --error-logfile logs/error.log
+            '
+            """
         }
     }
 }
