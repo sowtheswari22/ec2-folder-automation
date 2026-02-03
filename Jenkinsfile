@@ -5,9 +5,9 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sshagent(['mohancbe5202']) {
+                sshagent(['flask-ssh']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 << EOF
+                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 << 'EOF'
                       cd /opt/flask-app
                       git pull origin main
                       source venv/bin/activate
@@ -20,9 +20,9 @@ pipeline {
 
         stage('Deploy Flask App') {
             steps {
-                sshagent(['mohancbe5202']) {
+                sshagent(['flask-ssh']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 << EOF
+                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 << 'EOF'
                       cd /opt/flask-app
                       source venv/bin/activate
                       pkill -f gunicorn || true
