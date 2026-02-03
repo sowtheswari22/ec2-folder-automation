@@ -5,7 +5,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sshagent(['mohancbe5202']) {
+                sshagent(['flask-ssh']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
                         cd /opt/flask-app &&
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Deploy Flask App') {
             steps {
-                sshagent(['mohancbe5202']) {
+                sshagent(['flask-ssh']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
                         cd /opt/flask-app &&
