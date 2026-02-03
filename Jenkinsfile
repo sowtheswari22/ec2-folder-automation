@@ -19,7 +19,7 @@ pipeline {
 
         stage('Deploy Flask App') {
             steps {
-                sshagent(['flask-app-ssh']) {
+                sshagent(['flask-ssh']) {
                     sh '''
                     ssh mohancbe5202@APPLICATION_SERVER_IP << EOF
                       cd /opt/flask-app
