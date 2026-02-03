@@ -1,3 +1,2 @@
 #!/bin/bash
-echo 
-"Welcome from GCP server"
+echo "Welcome from GCP server"
