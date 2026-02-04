@@ -204,19 +204,17 @@ Use SSH keys instead of passwords
 Run Gunicorn as non-root user
 
 Do not install Python packages globally
+What happens overall (one flow)
 
-14. Future Improvements
+Code pushed to GitHub
 
-systemd service for Gunicorn
+Jenkins pipeline starts
 
-Nginx reverse proxy
+Jenkins SSH into server
 
-Rollback support
+Server pulls latest code
 
-Prometheus & Grafana monitoring
+Flask service restarts
 
-15. Conclusion
+New code is live
 
-This project demonstrates a production-style CI/CD pipeline using Flask, Jenkins, GitHub, and Gunicorn with virtual environments.
-
-It covers real-world issues and fixes, making it suitable for learning, interviews, and portfolio project
