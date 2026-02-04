@@ -4,7 +4,7 @@ stage('Deploy Flask App') {
             sh """
             ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
                 set -e
-                cd /opt/jenkins/flask-app
+                cd /opt/flask-app
                 source venv/bin/activate
 
                 # Stop existing gunicorn processes
