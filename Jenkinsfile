@@ -8,19 +8,19 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
                         set -e
-                        cd /opt/flask-app
-                        source venv/bin/activate
 
-                        # Stop existing gunicorn processes
-                        if pgrep -f gunicorn > /dev/null; then
-                            echo "Stopping existing gunicorn..."
-                            pkill -f gunicorn
-                        fi
+                        echo "Ensuring logs directory exists..."
+                        mkdir -p /opt/flask-app/logs
+                        chown -R mohancbe5202:mohancbe5202 /opt/flask-app/logs
 
-                        echo "Starting gunicorn..."
-                        gunicorn app:app -b 0.0.0.0:5000 --daemon \
-                            --access-logfile logs/access.log \
-                            --error-logfile logs/error.log
+                        echo "Reloading systemd..."
+                        sudo systemctl daemon-reload
+
+                        echo "Restarting Flask service via systemd..."
+                        sudo systemctl restart flaskapp
+
+                        echo "Checking service status..."
+                        systemctl status flaskapp --no-pager
                     '
                     """
                 }
@@ -28,6 +28,7 @@ pipeline {
         }
     }
 }
+
 
 
 
