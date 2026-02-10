@@ -5,7 +5,7 @@ pipeline {
         APP_SERVER_IP      = "136.114.250.47"
         APP_USER           = "mohancbe5202"
         APP_DIR            = "/opt/ec2-folder-automation"
-        SERVICE_NAME       = "flaskapp"
+        SERVICE_NAME       = "ec2-folder-automation"
         GIT_BRANCH         = "main"
     }
 
