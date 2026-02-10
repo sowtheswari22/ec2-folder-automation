@@ -2,29 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Deploy Flask App') {
+        stage('Deploy to Application Server') {
             steps {
-                sshagent(['flask-ssh']) {
+                sshagent(['app-server-ssh']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@34.69.84.254 '
-                        set -e
-
-                        echo "Pulling latest code from GitHub..."
-                        cd /opt/flask-app
-                        git pull origin main
-
-                        echo "Ensuring logs directory exists..."
-                        mkdir -p logs
-                        chown -R mohancbe5202:mohancbe5202 logs
-
-                        echo "Reloading systemd..."
-                        sudo systemctl daemon-reload
-
-                        echo "Restarting Flask service..."
-                        sudo systemctl restart flaskapp
-
-                        echo "Checking service status..."
-                        systemctl is-active flaskapp
+                    ssh -o StrictHostKeyChecking=no mohancbe5202@<APPLICATION_SERVER_PRIVATE_IP> '
+                        cd /opt/ec2-folder-automation &&
+                        git pull origin main &&
+                        sudo systemctl restart ec2-folder-automation
                     '
                     """
                 }
