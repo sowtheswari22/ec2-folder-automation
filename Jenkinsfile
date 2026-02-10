@@ -1,15 +1,36 @@
 pipeline {
     agent any
 
+    environment {
+        APP_SERVER_IP      = "34.69.84.254"
+        APP_USER           = "mohancbe5202"
+        APP_DIR            = "/opt/ec2-folder-automation"
+        SERVICE_NAME       = "flaskapp"
+        GIT_BRANCH         = "main"
+    }
+
     stages {
         stage('Deploy to Application Server') {
             steps {
                 sshagent(['app-server-ssh']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no mohancbe5202@<APPLICATION_SERVER_PRIVATE_IP> '
-                        cd /opt/ec2-folder-automation &&
-                        git pull origin main &&
-                        sudo systemctl restart ec2-folder-automation
+                    ssh -o StrictHostKeyChecking=no ${APP_USER}@${APP_SERVER_IP} '
+                        set -e
+
+                        echo "📂 Moving to app directory"
+                        cd ${APP_DIR}
+
+                        echo "📥 Pulling latest code"
+                        git pull origin ${GIT_BRANCH}
+
+                        echo "🔄 Reloading systemd"
+                        sudo systemctl daemon-reload
+
+                        echo "🚀 Restarting service"
+                        sudo systemctl restart ${SERVICE_NAME}
+
+                        echo "✅ Verifying service status"
+                        systemctl is-active ${SERVICE_NAME}
                     '
                     """
                 }
@@ -17,7 +38,6 @@ pipeline {
         }
     }
 }
-
 
 
 
